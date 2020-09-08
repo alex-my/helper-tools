@@ -1,2 +1,8 @@
-# helper-tools
+## helper-tools
+
 cli tool
+
+| 命令       | 缩写 | 作用                                        |
+| ---------- | ---- | ------------------------------------------- |
+| PWD        | pwd  | 显示当前目录                                |
+| GitPullAll | gpa  | 遍历当前目录下的所有工程，分别执行 git pull |
