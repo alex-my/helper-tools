@@ -8,8 +8,8 @@ import (
 	"github.com/urfave/cli/v2"
 )
 
-// GitPullAll 遍历目录下的所有 git 项目，并且更新
-func GitPullAll(ctx *cli.Context) error {
+// SVNUpAll 遍历目录下的所有 svn 项目，并且更新
+func SVNUpAll(ctx *cli.Context) error {
 	pwd, _ := os.Getwd()
 
 	dirnames, err := file.ListDirs(pwd)
@@ -23,8 +23,8 @@ func GitPullAll(ctx *cli.Context) error {
 	}
 
 	for _, dirname := range dirnames {
-		if file.DirContains(dirname, ".git") {
-			cmd := exec.Command("git", "pull")
+		if file.DirContains(dirname, ".svn") {
+			cmd := exec.Command("svn", "up")
 			cmd.Dir = dirname
 			_, err := cmd.Output()
 			if err != nil {
