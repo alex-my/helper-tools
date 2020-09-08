@@ -1,6 +1,15 @@
 ## helper-tools
 
-cli tool
+安装
+
+```text
+git clone https://github.com/alex-my/helper-tools.git
+cd helper-tools
+make mod
+make i
+```
+
+## 命令列表
 
 | 命令       | 缩写 | 作用                                             |
 | ---------- | ---- | ------------------------------------------------ |
