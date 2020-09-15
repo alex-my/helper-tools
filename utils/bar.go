@@ -89,7 +89,7 @@ func (bar *Bar) move() {
 
 func (bar *Bar) timeToString() string {
 	hour := bar.spend / 3600
-	minute := (hour * 3600) / 60
+	minute := (bar.spend - hour*3600) / 60
 	second := bar.spend - hour*3600 - minute*60
 
 	return fmt.Sprintf("%02d:%02d:%02d", hour, minute, second)
