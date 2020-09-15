@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"os"
 
 	"github.com/alex-my/ghelper/logger"
@@ -45,7 +46,7 @@ func main() {
 
 // AfterFunc ..
 func AfterFunc(ctx *cli.Context) error {
-	log.Infof("%s Done", ctx.Command.Name)
+	fmt.Printf("%s Done\n", ctx.Command.Name)
 	return nil
 }
 
