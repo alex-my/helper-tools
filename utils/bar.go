@@ -6,7 +6,14 @@ import (
 	"time"
 )
 
-// Bar 简单的终端进度条
+// 终端进度条
+// 使用:
+// bar := utils.NewBar(5)
+// bar.Run()
+//
+// 每执行完一个任务，调用一次 bar.Add()
+
+// Bar 进度条
 type Bar struct {
 	// total 总进度
 	total int
@@ -46,6 +53,34 @@ func NewBar(total int) *Bar {
 	return bar
 }
 
+// Run 执行进度条
+func (bar *Bar) Run() {
+	go bar.spendTime()
+	go bar.move()
+}
+
+// Add 完成一个进度
+func (bar *Bar) Add(ext ...string) {
+	bar.curr++
+
+	if len(ext) > 0 {
+		bar.ext = ext[0]
+	}
+
+	// 计算进度条
+	rate := bar.curr * 100 / bar.total
+	bar.doneProcess = ""
+	for i := 0; i < rate; i++ {
+		bar.doneProcess += ">"
+	}
+	bar.remainProcess = ""
+	for i := 0; i < (100 - rate); i++ {
+		bar.remainProcess += "-"
+	}
+
+	bar.refresh <- true
+}
+
 func (bar *Bar) init() {
 	width := 100
 
@@ -53,12 +88,6 @@ func (bar *Bar) init() {
 	for i := 0; i < width; i++ {
 		bar.remainProcess += "-"
 	}
-}
-
-// Run 执行进度条
-func (bar *Bar) Run() {
-	go bar.spendTime()
-	go bar.move()
 }
 
 func (bar *Bar) spendTime() {
@@ -93,28 +122,6 @@ func (bar *Bar) timeToString() string {
 	second := bar.spend - hour*3600 - minute*60
 
 	return fmt.Sprintf("%02d:%02d:%02d", hour, minute, second)
-}
-
-// Add 完成一个进度
-func (bar *Bar) Add(ext ...string) {
-	bar.curr++
-
-	if len(ext) > 0 {
-		bar.ext = ext[0]
-	}
-
-	// 计算进度条
-	rate := bar.curr * 100 / bar.total
-	bar.doneProcess = ""
-	for i := 0; i < rate; i++ {
-		bar.doneProcess += ">"
-	}
-	bar.remainProcess = ""
-	for i := 0; i < (100 - rate); i++ {
-		bar.remainProcess += "-"
-	}
-
-	bar.refresh <- true
 }
 
 func (bar *Bar) close() {
