@@ -36,7 +36,8 @@ func main() {
 				Action:  action.SVNUpAll,
 			},
 		},
-		After: AfterFunc,
+		After:          AfterFunc,
+		ExitErrHandler: ExitErrHandlerFunc,
 	}
 
 	app.Run(os.Args)
@@ -46,4 +47,9 @@ func main() {
 func AfterFunc(ctx *cli.Context) error {
 	log.Infof("%s Done", ctx.Command.Name)
 	return nil
+}
+
+// ExitErrHandlerFunc ..
+func ExitErrHandlerFunc(ctx *cli.Context, err error) {
+	log.Errorf("%s exit: %s", ctx.Command.Name, err.Error())
 }

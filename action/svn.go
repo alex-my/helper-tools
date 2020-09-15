@@ -4,7 +4,6 @@ import (
 	"os"
 	"os/exec"
 
-	"github.com/alex-my/ghelper/file"
 	"github.com/urfave/cli/v2"
 )
 
@@ -12,7 +11,7 @@ import (
 func SVNUpAll(ctx *cli.Context) error {
 	pwd, _ := os.Getwd()
 
-	dirnames, err := file.ListDirs(pwd)
+	dirnames, err := ListDirs(pwd, ".svn", 3)
 	if err != nil {
 		log.Errorf("dir: %s list failed: %s", pwd, err.Error())
 		return err
@@ -22,18 +21,20 @@ func SVNUpAll(ctx *cli.Context) error {
 		log.Warnf("dir: %s no dirs", pwd)
 	}
 
-	for _, dirname := range dirnames {
-		if file.DirContains(dirname, ".svn") {
-			cmd := exec.Command("svn", "up")
-			cmd.Dir = dirname
-			_, err := cmd.Output()
-			if err != nil {
-				log.Error(err.Error())
-				continue
-			}
-			log.Infof("dir: %s done", dirname)
-		}
-	}
+	svnUpAll(dirnames)
 
 	return nil
+}
+
+func svnUpAll(dirnames []string) {
+	for _, dirname := range dirnames {
+		cmd := exec.Command("svn", "up")
+		cmd.Dir = dirname
+		_, err := cmd.Output()
+		if err != nil {
+			log.Error(err.Error())
+			continue
+		}
+		log.Infof("dir: %s done", dirname)
+	}
 }
