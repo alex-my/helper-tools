@@ -22,20 +22,25 @@ func GitPullAll(ctx *cli.Context) error {
 		log.Warnf("dir: %s no dirs", pwd)
 	}
 
-	gitPullAll(dirnames)
+	bar := utils.NewBar(len(dirnames))
+	bar.Run()
+
+	gitPullAll(dirnames, bar)
 
 	return nil
 }
 
-func gitPullAll(dirnames []string) {
+func gitPullAll(dirnames []string, bar *utils.Bar) {
 	for _, dirname := range dirnames {
 		cmd := exec.Command("git", "pull")
 		cmd.Dir = dirname
 		_, err := cmd.Output()
+
+		bar.Add(dirname)
+
 		if err != nil {
 			log.Error(err.Error())
 			continue
 		}
-		log.Infof("dir: %s done", dirname)
 	}
 }

@@ -22,20 +22,25 @@ func SVNUpAll(ctx *cli.Context) error {
 		log.Warnf("dir: %s no dirs", pwd)
 	}
 
-	svnUpAll(dirnames)
+	bar := utils.NewBar(len(dirnames))
+	bar.Run()
+
+	svnUpAll(dirnames, bar)
 
 	return nil
 }
 
-func svnUpAll(dirnames []string) {
+func svnUpAll(dirnames []string, bar *utils.Bar) {
 	for _, dirname := range dirnames {
 		cmd := exec.Command("svn", "up")
 		cmd.Dir = dirname
 		_, err := cmd.Output()
+
+		bar.Add(dirname)
+
 		if err != nil {
 			log.Error(err.Error())
 			continue
 		}
-		log.Infof("dir: %s done", dirname)
 	}
 }

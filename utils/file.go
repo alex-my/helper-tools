@@ -1,5 +1,7 @@
 package utils
 
+// 文件相关
+
 import (
 	"io/ioutil"
 	"path"
