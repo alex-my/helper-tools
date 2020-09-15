@@ -4,6 +4,7 @@ import (
 	"os"
 	"os/exec"
 
+	"github.com/alex-my/helper-tools/utils"
 	"github.com/urfave/cli/v2"
 )
 
@@ -11,7 +12,7 @@ import (
 func SVNUpAll(ctx *cli.Context) error {
 	pwd, _ := os.Getwd()
 
-	dirnames, err := ListDirs(pwd, ".svn", 3)
+	dirnames, err := utils.ListDirs(pwd, ".svn", 3)
 	if err != nil {
 		log.Errorf("dir: %s list failed: %s", pwd, err.Error())
 		return err
