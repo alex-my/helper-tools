@@ -12,7 +12,7 @@ import (
 func SVNUpAll(ctx *cli.Context) error {
 	pwd, _ := os.Getwd()
 
-	dirnames, err := utils.ListDirs(pwd, ".svn", 3)
+	dirnames, err := utils.ListDirs(pwd, ".svn", 6)
 	if err != nil {
 		log.Errorf("dir: %s list failed: %s", pwd, err.Error())
 		return err
