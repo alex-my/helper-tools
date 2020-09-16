@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"os"
 
 	"github.com/alex-my/ghelper/logger"
@@ -37,17 +36,10 @@ func main() {
 				Action:  action.SVNUpAll,
 			},
 		},
-		After:          AfterFunc,
 		ExitErrHandler: ExitErrHandlerFunc,
 	}
 
 	app.Run(os.Args)
-}
-
-// AfterFunc ..
-func AfterFunc(ctx *cli.Context) error {
-	fmt.Printf("%s Done\n", ctx.Command.Name)
-	return nil
 }
 
 // ExitErrHandlerFunc ..

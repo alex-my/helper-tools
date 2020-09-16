@@ -43,4 +43,6 @@ func gitPullAll(dirnames []string, bar *utils.Bar) {
 			continue
 		}
 	}
+
+	bar.WaitClose()
 }

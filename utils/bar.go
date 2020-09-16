@@ -12,6 +12,8 @@ import (
 // bar.Run()
 //
 // 每执行完一个任务，调用一次 bar.Add()
+//
+// 结束时，执行 bar.WaitClose()
 
 // Bar 进度条
 type Bar struct {
@@ -81,6 +83,18 @@ func (bar *Bar) Add(ext ...string) {
 	bar.refresh <- true
 }
 
+// WaitClose 等待进度条输出
+func (bar *Bar) WaitClose() {
+	for {
+		select {
+		case <-bar.closeFlag:
+			return
+		case <-time.After(2 * time.Second):
+			return
+		}
+	}
+}
+
 func (bar *Bar) init() {
 	width := 100
 
@@ -97,7 +111,7 @@ func (bar *Bar) spendTime() {
 			bar.spend++
 			bar.refresh <- true
 		case <-bar.closeFlag:
-			break
+			return
 		}
 	}
 }
@@ -109,9 +123,9 @@ func (bar *Bar) move() {
 		fmt.Printf("\r\x1b[32;1m[%s\x1b[39;22m", message)
 
 		if bar.curr == bar.total {
+			// 等待一段时间再结束，等 fmt 输出
+			<-time.After(time.Second)
 			bar.close()
-			fmt.Println()
-			break
 		}
 	}
 }
@@ -127,7 +141,5 @@ func (bar *Bar) timeToString() string {
 func (bar *Bar) close() {
 	bar.closeOnce.Do(func() {
 		bar.closeFlag <- true
-		close(bar.closeFlag)
-		close(bar.refresh)
 	})
 }
