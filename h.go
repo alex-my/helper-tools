@@ -35,6 +35,12 @@ func main() {
 				Usage:   "遍历并更新当前目录下所有的svn项目，执行 svn up",
 				Action:  action.SVNUpAll,
 			},
+			{
+				Name:    "SVNCleanupAll",
+				Aliases: []string{"sca"},
+				Usage:   "遍历并更新当前目录下所有的svn项目，执行 svn cleanup",
+				Action:  action.SVNCleanupAll,
+			},
 		},
 		ExitErrHandler: ExitErrHandlerFunc,
 	}
