@@ -3,12 +3,12 @@ package main
 import (
 	"os"
 
-	"github.com/alex-my/ghelper/logger"
 	"github.com/alex-my/helper-tools/action"
 	"github.com/urfave/cli/v2"
+	zerologger "github.com/zerogo-hub/zero-helper/logger"
 )
 
-var log = logger.NewLogger()
+var log = zerologger.NewSampleLogger()
 
 func main() {
 	app := &cli.App{
@@ -28,6 +28,21 @@ func main() {
 				Aliases: []string{"gpa"},
 				Usage:   "遍历并更新当前目录下所有的git项目，执行 git pull",
 				Action:  action.GitPullAll,
+			},
+			{
+				Name:    "GitPushAll",
+				Aliases: []string{""},
+				Usage:   "遍历并推送当前目录下所有的git项目，执行 git push",
+				Action:  action.GitPushAll,
+			},
+			{
+				Name:    "GitSetRemoteUrl",
+				Aliases: []string{"gsru"},
+				Usage:   "遍历当前目录下所有的 git 项目，将项目地址设置为指定地址，并执行 git push",
+				Flags: []cli.Flag{
+					&cli.StringFlag{Name: "url", Value: "", Usage: "target git url"},
+				},
+				Action: action.GitSetRemoteURL,
 			},
 			{
 				Name:    "SVNUpAll",

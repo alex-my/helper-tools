@@ -1,7 +1,7 @@
 package action
 
 import (
-	"github.com/alex-my/ghelper/logger"
+	zerologger "github.com/zerogo-hub/zero-helper/logger"
 )
 
-var log = logger.NewLogger()
+var log = zerologger.NewSampleLogger()

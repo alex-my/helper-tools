@@ -1,4 +1,3 @@
-// Package git 处理 git 相关
 package action
 
 import (
