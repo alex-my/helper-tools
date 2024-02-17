@@ -9,6 +9,13 @@ make mod
 make i
 ```
 
+如果提示`h`命令不存在，需要将`go/bin`目录添加到路径中
+
+```
+# 添加到 .bash_profile 或者 .zshrc 中
+export PATH="~/go/bin:$PATH"
+```
+
 ## 命令列表
 
 | 命令            | 缩写 | 作用                                                                     |
