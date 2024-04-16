@@ -9,11 +9,32 @@ make mod
 make i
 ```
 
+如果`h`或者`h.exe`没有出现在`go/bin`目录下，可以看`GOBIN`是否已有制定
+
+```
+go env
+```
+
+如果没有指定`GOBIN`，可以使用以下命令指定后再次执行`make i`
+
+```
+go env -w GOBIN="你的地址"
+
+# 例如
+go env -w GOBIN="D:\ProgramCode\go\bin"
+```
+
 如果提示`h`命令不存在，需要将`go/bin`目录添加到路径中
 
 ```
 # 添加到 .bash_profile 或者 .zshrc 中
 export PATH="~/go/bin:$PATH"
+```
+
+在`windows`下，以上都准备好后，执行`h pwd`会报错，可以将`h.exe`重命名为`helper`，注意重新开启终端(powershell 等)
+
+```
+helper pwd
 ```
 
 ## 命令列表
