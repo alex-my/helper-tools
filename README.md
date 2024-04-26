@@ -27,8 +27,12 @@ go env -w GOBIN="D:\ProgramCode\go\bin"
 如果提示`h`命令不存在，需要将`go/bin`目录添加到路径中
 
 ```
+# linux & mac
 # 添加到 .bash_profile 或者 .zshrc 中
 export PATH="~/go/bin:$PATH"
+
+# windows
+添加到环境变量 path 中
 ```
 
 在`windows`下，以上都准备好后，执行`h pwd`会报错，可以将`h.exe`重命名为`helper`，注意重新开启终端(powershell 等)
